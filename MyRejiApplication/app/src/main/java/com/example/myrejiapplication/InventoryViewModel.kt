@@ -49,17 +49,17 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
     //fun deleteDatabaseItem()
 
 
-    private fun getNewItemEntry(itemId:Int,itemName: String, itemPrice: String, categoryName: String): Item {
+    private fun getNewItemEntry(id: Int,itemName: String, itemPrice: String, categoryName: String): Item {
         return Item(
-            id=itemId,
+            id,
             itemName = itemName,
             itemPrice = itemPrice.toDouble(),
             categoryName = categoryName
         )
     }
 
-    fun addNewItem(itemId: Int,  itemName: String, itemPrice: String, categoryName: String) {
-        val newItem = getNewItemEntry(itemId, itemName, itemPrice, categoryName)
+    fun addNewItem(  id: Int,itemName: String, itemPrice: String, categoryName: String) {
+        val newItem = getNewItemEntry( id,itemName, itemPrice, categoryName)
         insertItem(newItem)
 
         Log.d("TAG", "addNewItem(u,,)")

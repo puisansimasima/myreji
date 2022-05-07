@@ -3,7 +3,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/SelectFragment">
+
+    <fragment
+        android:id="@+id/SelectFragment"
+        android:name="com.example.myrejiapplication.SelectFragment"
+        android:label="Select"
+        tools:layout="@layout/fragment_select">
+
+
+        <action
+            android:id="@+id/action_SelectFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_SelectFragment_to_CastFragment"
+            app:destination="@id/CastFragment" />
+        <action
+            android:id="@+id/action_SelectFragment_to_ShopManagerFragment"
+            app:destination="@id/ShopManagerFragment" />
+        <action
+            android:id="@+id/action_SelectFragment_to_CategoryFragment"
+            app:destination="@id/CategoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ShopManagerFragment"
+        android:name="com.example.myrejiapplication.ShopManagerFragment"
+        android:label="ShopManager"
+        tools:layout="@layout/fragment_shop_manager">
+
+        <action
+            android:id="@+id/action_ShopManagerFragment_to_TableFragment"
+            app:destination="@id/TableFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/TableFragment"
+        android:name="com.example.myrejiapplication.TableFragment"
+        android:label="テーブル一覧"
+        tools:layout="@layout/fragment_table">
+
+        <action
+            android:id="@+id/action_TableFragment_to_TableDetailFragment"
+            app:destination="@id/TableDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/TableDetailFragment"
+        android:name="com.example.myrejiapplication.TableDetailFragment"
+        android:label="Table名"
+        tools:layout="@layout/fragment_table_detail">
+
+        <action
+            android:id="@+id/action_TableDetailFragment_to_TableFragment"
+            app:destination="@id/TableFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CategoryFragment"
+        android:name="com.example.myrejiapplication.CategoryFragment"
+        android:label="カテゴリー一覧"
+        tools:layout="@layout/fragment_category">
+
+        <action
+            android:id="@+id/action_CategoryFragment_to_CategoryDetailFragment"
+            app:destination="@id/CategoryDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/CategoryDetailFragment"
+        android:name="com.example.myrejiapplication.CategoryDetailFragment"
+        android:label="カテゴリー名"
+        tools:layout="@layout/fragment_category_detail">
+
+        <action
+            android:id="@+id/action_CategoryDetailFragment_to_CategoryFragment"
+            app:destination="@id/CategoryFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -25,4 +100,26 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/CastFragment"
+        android:name="com.example.myrejiapplication.CastFragment"
+        android:label="cast"
+        tools:layout="@layout/fragment_cast">
+
+        <action
+            android:id="@+id/action_CastFragment_to_CastDetailFragment"
+            app:destination="@id/CastDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/CastDetailFragment"
+        android:name="com.example.myrejiapplication.CastDetailFragment"
+        android:label="キャスト詳細"
+        tools:layout="@layout/fragment_cast_detail">
+
+        <action
+            android:id="@+id/action_CastDetailFragment_to_CastFragment"
+            app:destination="@id/CastFragment" />
+    </fragment>
+
+
 </navigation>

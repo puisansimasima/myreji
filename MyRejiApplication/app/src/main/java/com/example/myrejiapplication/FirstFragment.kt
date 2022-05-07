@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myrejiapplication.data.Item
 import com.example.myrejiapplication.data.ItemDao
 import com.example.myrejiapplication.databinding.FragmentFirstBinding
+
 import kotlinx.coroutines.flow.*
 
 /**
@@ -36,13 +37,8 @@ class FirstFragment : Fragment() {
     }
 
     lateinit var item: Item
-
-    private var _binding: FragmentFirstBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private var _binding: com.example.myrejiapplication.databinding.FragmentFirstBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,20 +53,16 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val itemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
-
 
         //recyclerviewを押したら画面遷移
 
         val adapter = ItemListAdapter {
+            val action =
+                FirstFragmentDirections.actionFirstFragmentToSecondFragment()
 
-         //   val action =
-         //       FirstFragmentDirections.actionFirstFragmentToSecondFragment()
-
-         //   this.findNavController().navigate(action)
-
-               }
+            this.findNavController().navigate(action)
+        }
 
         adapter.setOnViewClickListener(
             // インターフェースの再利用は想定しておらず、その場限りでしか使わないためobject式として宣言
@@ -103,10 +95,7 @@ class FirstFragment : Fragment() {
         }
 
         binding.buttonFirst.setOnClickListener {
-            Log.d("TAG", _binding.toString())
-            Log.d("TAG", "nu--")
             this.findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-
         }
 
     }
@@ -149,13 +138,6 @@ class FirstFragment : Fragment() {
                   //  Log.d("TAG-curclicklist",adapter.currentList.toString())
                // }
 
-
-
-
-
-
-
-
                 //   deleteItem(viewHolder, direction)
 
 
@@ -164,10 +146,6 @@ class FirstFragment : Fragment() {
             }
 
            // private fun deleteItem(item: Item) {
-
-
-
-
 
           //  }
 

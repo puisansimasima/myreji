@@ -25,18 +25,13 @@ var album = mutableListOf<Item>()
 class ItemListAdapter( val onItemClicked: (Item) -> Unit) :
     ListAdapter<Item, ItemListAdapter.ItemViewHolder>(DiffCallback) {
 
-
-
-
     // 1. リスナを格納する変数を定義（lateinitで初期化を遅らせている）
     lateinit var listener: OnItemViewClickListener
-
 
     // 2. インターフェースを作成
     interface OnItemViewClickListener {
         fun onItemClick(item: Item)
     }
-
 
     // 3. リスナーをセット
     fun setOnViewClickListener(listener: ItemListAdapter.OnItemViewClickListener) {
@@ -83,7 +78,7 @@ class ItemListAdapter( val onItemClicked: (Item) -> Unit) :
         class ItemViewHolder(private var binding: CategoryTextItemListViewBinding) :
             RecyclerView.ViewHolder(binding.root) {
 
-           val _itemId=binding.itemId
+           //val _itemId=binding.itemId
             fun bind(item: Item) {
                 binding.itemId.text = item.id.toString()
                 binding.itemName.text = item.itemName

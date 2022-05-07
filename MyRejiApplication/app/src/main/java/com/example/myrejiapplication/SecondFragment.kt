@@ -13,11 +13,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myrejiapplication.databinding.FragmentSecondBinding
 import com.example.myrejiapplication.data.Item
+
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+
 /**
  * Fragment to add or update an item in the Inventory database.
  */
 
 class SecondFragment : Fragment() {
+
+    private lateinit var firebase: DatabaseReference
 
     //private val navigationArgs: ItemDetailFragmentArgs by navArgs()
     lateinit var item: Item
@@ -47,7 +54,6 @@ class SecondFragment : Fragment() {
      */
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
-
             binding.itemName.text.toString(),
             binding.itemPrice.text.toString(),
             binding.categoryName.text.toString(),
@@ -62,14 +68,11 @@ class SecondFragment : Fragment() {
     private fun addNewItem() {
         if (isEntryValid()) {
             viewModel.addNewItem(
-                itemId = id,
+                id=0,
                 binding.itemName.text.toString(),
                 binding.itemPrice.text.toString(),
                 binding.categoryName.text.toString(),
             )
-
-            val action = SecondFragmentDirections.actionSecondFragmentToFirstFragment()
-            findNavController().navigate(action)
         }
     }
 
@@ -77,19 +80,35 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.saveButton.setOnClickListener {
-            Log.d("TAG",_binding.toString())
-            Log.d("TAG","nururu--")
-
-
-
-
-
             addNewItem()
-           // findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-            //addNewItem()
 
+            //addDatabase()
+            val database = Firebase.database
+            val myRef = database.getReference("items")
+
+            val AAA=binding.itemName.text.toString()
+            myRef.setValue(AAA)
+
+
+            val myRef1 = database.getReference("list")
+            var list:List<String>
+            list=listOf(
+
+                binding.itemName.text.toString(),
+                binding.itemPrice.text.toString(),
+                binding.categoryName.text.toString())
+
+            //myRef1.setValue(list)
+
+            myRef1.push().setValue(list)
+
+Log.d("TAGlist",list.toString())
+
+
+            val action = SecondFragmentDirections.actionSecondFragmentToFirstFragment()
+            findNavController().navigate(action)
+          //  findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
     }
 
@@ -97,4 +116,10 @@ class SecondFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-}
+
+
+
+
+
+
+    }

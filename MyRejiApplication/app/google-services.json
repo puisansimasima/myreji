@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "379118014991",
+    "project_id": "my-rejiapplication",
+    "storage_bucket": "my-rejiapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379118014991:android:e74c855a81d2b35850497a",
+        "android_client_info": {
+          "package_name": "com.example.myrejiapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "379118014991-tju015e7fp02tav1ps6he1en2pbcv10j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4nUpwA18b1XntV_eqizaes3xbkg3F6pU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379118014991-tju015e7fp02tav1ps6he1en2pbcv10j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
