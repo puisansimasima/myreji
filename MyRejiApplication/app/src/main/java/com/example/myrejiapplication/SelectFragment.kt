@@ -31,6 +31,7 @@ class SelectFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
     private var _binding: FragmentSelectBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(

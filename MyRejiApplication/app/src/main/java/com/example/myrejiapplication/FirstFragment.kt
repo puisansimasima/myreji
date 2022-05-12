@@ -130,18 +130,6 @@ class FirstFragment : Fragment() {
                 }
 
 
-                //fun onItemClick(item: Item) {
-                  //  Log.d("TAG-adaclic", adapter.onItemClicked.toString())
-                    Log.d("TAG-swipeitem", viewModel.allItems .toString())
-               // Log.d("TAG-swipeitem-2", viewModel.viewList.collect(viewModel.viewList) .toString())
-                    //viewModel.deleteItem(item)
-                  //  Log.d("TAG-curclicklist",adapter.currentList.toString())
-               // }
-
-                //   deleteItem(viewHolder, direction)
-
-
-
                 adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
             }
 

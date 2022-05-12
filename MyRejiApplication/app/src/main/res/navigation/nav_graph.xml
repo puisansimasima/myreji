@@ -35,6 +35,15 @@
         <action
             android:id="@+id/action_ShopManagerFragment_to_TableFragment"
             app:destination="@id/TableFragment" />
+        <action
+            android:id="@+id/action_ShopManagerFragment_to_setServiceFeeFragment"
+            app:destination="@id/setServiceFeeFragment" />
+        <action
+            android:id="@+id/action_ShopManagerFragment_to_setShopNameFragment"
+            app:destination="@id/setShopNameFragment" />
+        <action
+            android:id="@+id/action_ShopManagerFragment_to_setTaxFragment"
+            app:destination="@id/setTaxFragment" />
     </fragment>
 
     <fragment
@@ -119,6 +128,33 @@
         <action
             android:id="@+id/action_CastDetailFragment_to_CastFragment"
             app:destination="@id/CastFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setServiceFeeFragment"
+        android:name="com.example.myrejiapplication.SetServiceFeeFragment"
+        android:label="SetServiceFeeFragment"
+        tools:layout="@layout/fragment_set_service_fee">
+        <action
+            android:id="@+id/action_setServiceFeeFragment_to_ShopManagerFragment"
+            app:destination="@id/ShopManagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setShopNameFragment"
+        android:name="com.example.myrejiapplication.SetShopNameFragment"
+        android:label="SetShopNameFragment"
+        tools:layout="@layout/fragment_set_shop_name">
+        <action
+            android:id="@+id/action_setShopNameFragment_to_ShopManagerFragment"
+            app:destination="@id/ShopManagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setTaxFragment"
+        android:name="com.example.myrejiapplication.SetTaxFragment"
+        android:label="SetTaxFragment"
+        tools:layout="@layout/fragment_set_tax">
+        <action
+            android:id="@+id/action_setTaxFragment_to_ShopManagerFragment"
+            app:destination="@id/ShopManagerFragment" />
     </fragment>
 
 

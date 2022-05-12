@@ -5,9 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-
-import com.example.myrejiapplication.databinding.FragmentShopManagerBinding
+import com.example.myrejiapplication.databinding.FragmentSelectBinding
+import com.example.myrejiapplication.databinding.FragmentSetServiceFeeBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +15,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ShopManagerFragment.newInstance] factory method to
+ * Use the [SetServiceFeeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ShopManagerFragment : Fragment() {
+class SetServiceFeeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -31,8 +30,7 @@ class ShopManagerFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
-    private var _binding: FragmentShopManagerBinding? = null
+    private var _binding: FragmentSetServiceFeeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -40,44 +38,10 @@ class ShopManagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentShopManagerBinding.inflate(inflater, container, false)
+        _binding = FragmentSetServiceFeeBinding.inflate(inflater, container, false)
         return binding.root
+
     }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.shopNameTextView.setOnClickListener {
-
-            val action= ShopManagerFragmentDirections.actionShopManagerFragmentToSetShopNameFragment()
-            findNavController().navigate(action)
-
-        }
-
-        binding.tableNameTextView.setOnClickListener {
-            val action=ShopManagerFragmentDirections.actionShopManagerFragmentToTableFragment()
-            findNavController().navigate(action)
-
-        }
-
-        binding.setTaxTextView.setOnClickListener {
-            val action= ShopManagerFragmentDirections.actionShopManagerFragmentToSetTaxFragment()
-            findNavController().navigate(action)
-        }
-
-        binding.setServiceFeeTextView.setOnClickListener {
-            val action= ShopManagerFragmentDirections.actionShopManagerFragmentToSetServiceFeeFragment()
-            findNavController().navigate(action)
-
-        }
-    }
-
-
-
-
-
-
 
     companion object {
         /**
@@ -86,12 +50,12 @@ class ShopManagerFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ShopManagerFragment.
+         * @return A new instance of fragment SetServiceFeeFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ShopManagerFragment().apply {
+            SetServiceFeeFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

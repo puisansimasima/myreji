@@ -60,8 +60,6 @@ class SecondFragment : Fragment() {
         )
     }
 
-
-
     /**
      * Inserts the new Item into database and navigates up to list fragment.
      */
@@ -92,7 +90,7 @@ class SecondFragment : Fragment() {
 
 
             val myRef1 = database.getReference("list")
-            var list:List<String>
+            val list:List<String>
             list=listOf(
 
                 binding.itemName.text.toString(),
