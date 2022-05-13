@@ -4,27 +4,19 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.renderscript.Sampler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.myrejiapplication.data.Item
 import com.example.myrejiapplication.databinding.FragmentTableBinding
-import com.google.firebase.FirebaseError
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -135,7 +127,7 @@ class TableFragment : Fragment() {
 
 
 
-        ReadFirebase()
+        ReadFirebase(){
 
        // binding.addTableButton .setOnClickListener {
            // this.findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
@@ -152,18 +144,29 @@ class TableFragment : Fragment() {
 
  //   }
 
-   fun ReadFirebase(){
+
+
+   fun ReadFirebase(valueList1: ArrayList<String>){
         FirebaseDatabase.getInstance().getReference("table").addValueEventListener(
             object :ValueEventListener{
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val value = dataSnapshot.getValue()
+                    val value = dataSnapshot.value
 
-                    val items: List<Item>? = dataSnapshot.getValue(object : GenericTypeIndicator<ArrayList<Item>>() {})
-                   Log.d("TAG",items.toString())
+                    val items: HashMap<String,String>? = dataSnapshot.getValue(object : GenericTypeIndicator<HashMap<String, String>>() {})
+                        Log.d("TAG=hash",items.toString())
+                        Log.d("TAGvalue",value.toString())
+
+                   val valueList = items?.values?.let { ArrayList(it) }
+                    valueList1.
+                    val keyList = items?.keys?.let { ArrayList(it)}
 
 
 
-                 //   Log.d("TAG, ",  items.toString())
+                   Log.d("TAGkeylist",  keyList.toString())
+                    Log.d("TAGvallist",  valueList.toString())
+
+
+
                    //binding.tableRecyclerView.adapter= items
                 }
             //    recyclerView!!.adapter =
@@ -175,7 +178,11 @@ class TableFragment : Fragment() {
                 }
 
             }
-        )}
+        )
+
+
+
+   }
 
 
 
