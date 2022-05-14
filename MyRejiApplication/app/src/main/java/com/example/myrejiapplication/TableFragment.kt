@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myrejiapplication.data.Item
 import com.example.myrejiapplication.databinding.FragmentTableBinding
 import com.google.firebase.database.*
+import java.io.File
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -70,9 +71,6 @@ class TableFragment : Fragment() {
      //   }
 
 
-
-       // val database=Firebase.database.getInstance()
-
         val itemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
 
         //recyclerviewを押したら画面遷移
@@ -108,85 +106,17 @@ class TableFragment : Fragment() {
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
 
+        val valueList:MutableList<String>
 
+        =mutableListOf()
 
+        val list:MutableList<String>
 
+        ReadFirebase()
 
-       // refTable.addValueEventListener(object : ValueEventListener {
-          //  override fun onDataChange(dataSnapshot: DataSnapshot) {
-          //
-         //       userData.setEmail(dataSnapshot.getValue(String::class.java))
-         //   }
-
-         //   override fun onCancelled(databaseError: DatabaseError) {
-           //     Log.d("seit", "ValueEventListener#onCancelled")
-                // サーバーエラーかもしくはセキュリティとデータべーすルールによってデータにアクセスできない
-         //   }
-      //  })
-
-
-
-
-        ReadFirebase(){
-
-       // binding.addTableButton .setOnClickListener {
-           // this.findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-       // }
-
-    }
-
-    //override fun onStart() {
-    //    super.onStart()
-       // firebase = Firebase.database.reference
-
-      //  firebase.database.getReference("table")
-
-
- //   }
-
-
-
-   fun ReadFirebase(valueList1: ArrayList<String>){
-        FirebaseDatabase.getInstance().getReference("table").addValueEventListener(
-            object :ValueEventListener{
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val value = dataSnapshot.value
-
-                    val items: HashMap<String,String>? = dataSnapshot.getValue(object : GenericTypeIndicator<HashMap<String, String>>() {})
-                        Log.d("TAG=hash",items.toString())
-                        Log.d("TAGvalue",value.toString())
-
-                   val valueList = items?.values?.let { ArrayList(it) }
-                    valueList1.
-                    val keyList = items?.keys?.let { ArrayList(it)}
-
-
-
-                   Log.d("TAGkeylist",  keyList.toString())
-                    Log.d("TAGvallist",  valueList.toString())
-
-
-
-                   //binding.tableRecyclerView.adapter= items
-                }
-            //    recyclerView!!.adapter =
-
-                override fun onCancelled(error: DatabaseError) {
-
-                    Log.d("TAG","sipppai")
-             //       TODO("Not yet implemented")
-                }
-
-            }
-        )
-
-
+            Log.d("TAG-fire",ReadFirebase().toString())
 
    }
-
-
-
-
 
 
     //カードのスワイプアクションの定義
@@ -217,9 +147,6 @@ class TableFragment : Fragment() {
                 val list=ItemListAdapter{
 
                 }
-
-
-
 
                 adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
             }
@@ -272,23 +199,89 @@ class TableFragment : Fragment() {
         })
 
 
-companion object {
-/**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TableFragment.
- */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TableFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun makeList(list: ArrayList<String>) {
+
+        Log.d("TAGvallist", list.toString())
+
+    }
+
+
+    private fun ReadFirebase() {
+
+//val fireList: ArrayList<String>
+
+        FirebaseDatabase.getInstance().getReference("table").addValueEventListener(
+            object : ValueEventListener {
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                   // val artist by lazy{getArt()}  //lazyによって初期化
+                    val fireList by lazy{getFirebaseList()}  //lazyによって初期化
+                    //  val firevalue = dataSnapshot.value
+                    val items: HashMap<String, String>? = dataSnapshot.getValue(object :
+                        GenericTypeIndicator<HashMap<String, String>>() {})
+
+                    Log.d("TAG=hash", items.toString())
+
+                    val keyList = items?.keys?.let { ArrayList(it) }
+                    val valueList = items?.values?.let { ArrayList(it) }
+
+                    val _fireList = items?.keys?.let { ArrayList(it) }!!
+
+
+
+
+
+                    // fun getFirebaseList(): ArrayList<String>{
+
+
+                      //  val songData = File("musicFiles/lib.csv")
+                         //   .readText()
+                         //   .split("\n")
+                         //   .shuffled()
+                         //   .first()
+                     //   return songData.split(",")[0]
+                   // }
+                    if (valueList != null) {
+                        makeList(valueList)
+                    }
+
+                    Log.d("TAGkeylist", keyList.toString())
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                    Log.d("TAG", "sipppai")
+                    //       TODO("Not yet implemented")
                 }
             }
+        )
+
     }
+
+    private fun getFirebaseList() {
+        TODO("Not yet implemented")
+    }
+
+    companion object {
+            /**
+             * Use this factory method to create a new instance of
+             * this fragment using the provided parameters.
+             *
+             * @param param1 Parameter 1.
+             * @param param2 Parameter 2.
+             * @return A new instance of fragment TableFragment.
+             */
+            // TODO: Rename and change types and number of parameters
+            @JvmStatic
+            fun newInstance(param1: String, param2: String) =
+                TableFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_PARAM1, param1)
+                        putString(ARG_PARAM2, param2)
+                    }
+                }
+        }
+
 }
+
