@@ -73,7 +73,9 @@ class ItemListAdapter( val onItemClicked: (Item) -> Unit) :
         album.add(current)
     }
 
-        //コンストラクタで渡されるアイテム1件（1行）の各ビュー要素
+
+
+    //コンストラクタで渡されるアイテム1件（1行）の各ビュー要素
 
         class ItemViewHolder(private var binding: CategoryTextItemListViewBinding) :
             RecyclerView.ViewHolder(binding.root) {

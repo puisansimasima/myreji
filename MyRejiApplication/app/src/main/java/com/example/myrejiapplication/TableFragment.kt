@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myrejiapplication.data.Item
 import com.example.myrejiapplication.databinding.FragmentTableBinding
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.io.File
 
 
@@ -94,6 +96,73 @@ class TableFragment : Fragment() {
             }
         )
 
+
+
+
+
+
+
+        // Attach an observer on the allItems list to update the UI automatically when the data
+        // changes.
+
+
+        var firebaseList: MutableList<String> =  mutableListOf()
+
+                FirebaseDatabase.getInstance().getReference("table").addValueEventListener(
+                    object : ValueEventListener {
+
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            // val artist by lazy{getArt()}  //lazyによって初期化
+                            // val fireList by lazy{getFirebaseList()}  //lazyによって初期化
+                            //  val firevalue = dataSnapshot.value
+                            val items: HashMap<String, String>? = dataSnapshot.getValue(object :
+                                GenericTypeIndicator<HashMap<String, String>>() {})
+
+                            Log.d("TAG=hash", items.toString())
+
+                            val keyList = items?.keys?.let { ArrayList(it) }?.sorted()
+                            Log.d("TAG=hash", keyList.toString())
+                            val valueList = items?.values?.let { ArrayList(it) }
+
+                            val _fireList = items?.keys?.let { ArrayList(it) }!!
+
+
+                            firebaseList= items.values.let { ArrayList(it) } .toMutableList()
+
+                            Log.d("TAGtolist", firebaseList.toString())
+
+
+
+
+                            val database = Firebase.database
+                            // fun getFirebaseList(): ArrayList<String>{
+                            val myRef1 = database.getReference("list")
+                            myRef1.push().setValue(firebaseList)
+                            //  val songData = File("musicFiles/lib.csv")
+                            //   .readText()
+                            //   .split("\n")
+                            //   .shuffled()
+                            //   .first()
+                            //   return songData.split(",")[0]
+                            // }
+
+
+                            Log.d("TAGkeylist", keyList.toString())
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+
+                            //       TODO("Not yet implemented")
+                        }
+
+                    }
+
+                )
+                Log.d("TAGreta",firebaseList.toString())
+
+
         binding.tableRecyclerView.setHasFixedSize(true)
         binding.tableRecyclerView.addItemDecoration(itemDecoration)
         binding.tableRecyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -103,20 +172,19 @@ class TableFragment : Fragment() {
         val swipeToDismissTouchHelper = getSwipeToDismissTouchHelper(adapter)
         swipeToDismissTouchHelper.attachToRecyclerView(binding.tableRecyclerView)
 
+adapter.submitList(firebaseList)
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
+        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                adapter.submitList(it)
+            }
+        }
+            }
 
-        val valueList:MutableList<String>
 
-        =mutableListOf()
 
-        val list:MutableList<String>
 
-        ReadFirebase()
-
-            Log.d("TAG-fire",ReadFirebase().toString())
-
-   }
 
 
     //カードのスワイプアクションの定義
@@ -206,62 +274,6 @@ class TableFragment : Fragment() {
     }
 
 
-    private fun ReadFirebase() {
-
-//val fireList: ArrayList<String>
-
-        FirebaseDatabase.getInstance().getReference("table").addValueEventListener(
-            object : ValueEventListener {
-
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                   // val artist by lazy{getArt()}  //lazyによって初期化
-                    val fireList by lazy{getFirebaseList()}  //lazyによって初期化
-                    //  val firevalue = dataSnapshot.value
-                    val items: HashMap<String, String>? = dataSnapshot.getValue(object :
-                        GenericTypeIndicator<HashMap<String, String>>() {})
-
-                    Log.d("TAG=hash", items.toString())
-
-                    val keyList = items?.keys?.let { ArrayList(it) }
-                    val valueList = items?.values?.let { ArrayList(it) }
-
-                    val _fireList = items?.keys?.let { ArrayList(it) }!!
-
-
-
-
-
-                    // fun getFirebaseList(): ArrayList<String>{
-
-
-                      //  val songData = File("musicFiles/lib.csv")
-                         //   .readText()
-                         //   .split("\n")
-                         //   .shuffled()
-                         //   .first()
-                     //   return songData.split(",")[0]
-                   // }
-                    if (valueList != null) {
-                        makeList(valueList)
-                    }
-
-                    Log.d("TAGkeylist", keyList.toString())
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                    Log.d("TAG", "sipppai")
-                    //       TODO("Not yet implemented")
-                }
-            }
-        )
-
-    }
-
-    private fun getFirebaseList() {
-        TODO("Not yet implemented")
-    }
 
     companion object {
             /**
@@ -282,6 +294,7 @@ class TableFragment : Fragment() {
                     }
                 }
         }
+ }
 
-}
+
 
