@@ -54,7 +54,7 @@ class TableDetailFragment : Fragment() {
 
         binding.addNewTable.setOnClickListener {
 
-        fireDatabase=Firebase.database.reference
+
 
 
         writeNewItem(binding.tableName.text.toString() )
@@ -74,10 +74,20 @@ class TableDetailFragment : Fragment() {
         }
     }
 
-    fun writeNewItem(itemName: String) {
+    private fun writeNewItem(tableName: String) {
       //  val firebaseItem = FirebaseItem(itemName)
+        fireDatabase=Firebase.database.reference
+        fireDatabase.child("table").push().setValue(tableName)
 
-        fireDatabase.child("table").push().setValue(itemName)
+        val list:List<String>
+            =listOf(tableName,"id")
+
+        fireDatabase.child("list").push().setValue(list)
+
+
+
+        //myRef1.setValue(list)
+
 
     }
     companion object {

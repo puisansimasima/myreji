@@ -5,35 +5,37 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myrejiapplication.data.Item
+import com.example.myrejiapplication.data.TableName
+
 import com.example.myrejiapplication.data.getFormattedPrice
 import com.example.myrejiapplication.databinding.CategoryTextItemListViewBinding
+import com.example.myrejiapplication.databinding.FragmentTableListViewBinding
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 
+var tableList = mutableListOf<TableName>()
 
-  //  var album = mutableListOf<Item>()
-
-    class ItemListAdapter1( val onItemClicked: (Item) -> Unit) :
-        ListAdapter<Item, ItemListAdapter.ItemViewHolder>(DiffCallback) {
+    class TableListAdapter( val onItemClicked: (TableName) -> Unit) :
+        ListAdapter<TableName, TableListAdapter.TableViewHolder>(DiffCallback) {
 
         // 1. リスナを格納する変数を定義（lateinitで初期化を遅らせている）
         lateinit var listener: OnItemViewClickListener
 
         // 2. インターフェースを作成
         interface OnItemViewClickListener {
-            fun onItemClick(item: Item)
+            fun onItemClick(item: TableName)
         }
 
         // 3. リスナーをセット
-        fun setOnViewClickListener(listener: ItemListAdapter.OnItemViewClickListener) {
+        fun setOnViewClickListener(listener: TableListAdapter.OnItemViewClickListener) {
             // 定義した変数listenerに実行したい処理を引数で渡す（Fragmentで渡している）
             this.listener = listener
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableListAdapter.TableViewHolder {
 
-            return ItemViewHolder(
-                CategoryTextItemListViewBinding.inflate(
+            return TableListAdapter.TableViewHolder(
+                FragmentTableListViewBinding.inflate(
                     LayoutInflater.from(
                         parent.context
 
@@ -46,7 +48,7 @@ import com.example.myrejiapplication.databinding.CategoryTextItemListViewBinding
         // Listから対応する行のデータを取得し、
         // 各Viewの詳細設定を行います
 
-        override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: TableListAdapter.TableViewHolder, position: Int) {
             val current = getItem(position)
 
 
@@ -61,23 +63,20 @@ import com.example.myrejiapplication.databinding.CategoryTextItemListViewBinding
             holder.bind(current)
 
 
-            album.add(current)
+            tableList.add(current)
         }
 
 
 
         //コンストラクタで渡されるアイテム1件（1行）の各ビュー要素
 
-        class ItemViewHolder(private var binding: CategoryTextItemListViewBinding) :
+        class TableViewHolder(private var binding: FragmentTableListViewBinding) :
             RecyclerView.ViewHolder(binding.root) {
 
             //val _itemId=binding.itemId
-            fun bind(item: Item) {
-                binding.itemId.text = item.id.toString()
-                binding.itemName.text = item.itemName
-                binding.itemPrice.text = item.getFormattedPrice()
-                binding.categoryName.text = item.categoryName
-
+            fun bind(tableName: TableName) {
+                binding.tableId.text=tableName.tableId.toString()
+                binding.tableName.text = tableName.tableName.toString()
             }
 
         }
@@ -91,13 +90,13 @@ import com.example.myrejiapplication.databinding.CategoryTextItemListViewBinding
 
 
         companion object {
-            private val DiffCallback = object : DiffUtil.ItemCallback<Item>() {
-                override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+            private val DiffCallback = object : DiffUtil.ItemCallback<TableName>() {
+                override fun areItemsTheSame(oldItem: TableName, newItem: TableName): Boolean {
                     return oldItem === newItem
                 }
 
-                override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-                    return oldItem.itemName == newItem.itemName
+                override fun areContentsTheSame(oldItem: TableName, newItem: TableName): Boolean {
+                    return oldItem.tableName  == newItem.tableName
                 }
             }
         }

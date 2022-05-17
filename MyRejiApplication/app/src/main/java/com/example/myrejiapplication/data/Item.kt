@@ -30,6 +30,11 @@ data class UserItem(
 
 )
 
+data class TableName(
+    val tableId:Int,
+    val tableName:String
+)
+
 //data class FirebaseItem(
   //  val itemName_firebase: String="",
 

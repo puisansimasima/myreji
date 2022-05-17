@@ -14,12 +14,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myrejiapplication.data.Item
+import com.example.myrejiapplication.data.TableName
 import com.example.myrejiapplication.databinding.FragmentTableBinding
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.io.File
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -77,7 +76,7 @@ class TableFragment : Fragment() {
 
         //recyclerviewを押したら画面遷移
 
-        val adapter = ItemListAdapter {
+        val adapter = TableListAdapter {
             val action =
                 TableFragmentDirections.actionTableFragmentToTableDetailFragment()
             this.findNavController().navigate(action)
@@ -85,10 +84,10 @@ class TableFragment : Fragment() {
 
         adapter.setOnViewClickListener(
             // インターフェースの再利用は想定しておらず、その場限りでしか使わないためobject式として宣言
-            object : ItemListAdapter.OnItemViewClickListener {
+            object : TableListAdapter.OnItemViewClickListener {
 
-                override fun onItemClick(item: Item) {
-                    Log.d("TAG-clickitem", item .toString())
+                override fun onItemClick(tableName: TableName) {
+                    Log.d("TAG-clickitem", tableName .toString())
                     //処理
 
                 }
@@ -96,17 +95,11 @@ class TableFragment : Fragment() {
             }
         )
 
-
-
-
-
-
-
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
 
 
-        var firebaseList: MutableList<String> =  mutableListOf()
+        var firebaseList: MutableList<TableName> =  mutableListOf()
 
                 FirebaseDatabase.getInstance().getReference("table").addValueEventListener(
                     object : ValueEventListener {
@@ -115,22 +108,25 @@ class TableFragment : Fragment() {
                             // val artist by lazy{getArt()}  //lazyによって初期化
                             // val fireList by lazy{getFirebaseList()}  //lazyによって初期化
                             //  val firevalue = dataSnapshot.value
-                            val items: HashMap<String, String>? = dataSnapshot.getValue(object :
+                            val items: HashMap<String ,String>? = dataSnapshot.getValue(object :
                                 GenericTypeIndicator<HashMap<String, String>>() {})
 
                             Log.d("TAG=hash", items.toString())
 
                             val keyList = items?.keys?.let { ArrayList(it) }?.sorted()
+
+
+
                             Log.d("TAG=hash", keyList.toString())
                             val valueList = items?.values?.let { ArrayList(it) }
 
                             val _fireList = items?.keys?.let { ArrayList(it) }!!
 
-
-                            firebaseList= items.values.let { ArrayList(it) } .toMutableList()
+                           // firebaseList= items.values.let { ArrayList(it) } .toMutableList()
 
                             Log.d("TAGtolist", firebaseList.toString())
 
+                            //val myRef1 = database.getReference("list")
 
 
 
@@ -161,6 +157,49 @@ class TableFragment : Fragment() {
 
                 )
                 Log.d("TAGreta",firebaseList.toString())
+        FirebaseDatabase.getInstance().getReference("list").addValueEventListener(
+            object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    Log.d("TAG-","kaeatta--")
+
+                 //   val items: HashMap<String ,String>? = snapshot.getValue(object :
+                   //     GenericTypeIndicator<HashMap<String,String>>() {})
+
+                 //   Log.d("TAG-hash2", items.toString())
+
+                    ; // will have value of String: "your-project-name"
+                    Log.d("TAG-hash2",snapshot.key .toString())
+
+
+                    val resultMap=HashMap<String, String>()
+                    val tList=ArrayList<HashMap<String, String>>()
+
+
+
+                 //   HashMap<String, String> resultMap = new HashMap<String, String>();
+                  //  　　　　List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+
+                  //  for (i in snapshot : DataSnapshot) {
+                     //   snapshot.getKey() // will have value of String: "users", then "books"
+                    //    for (DataSnapshot deeperSnapshot : dataSnapshot) {
+                     //   snapshot.getKey();
+                        // if snapshot.getKey() is "users", this will have value of String: "randomUserId1", then "randomUserId2"
+                        // If snapshot.getKey() is "books", this will have value of String: "bookId1", then "bookId2"
+                  //  }
+
+               // }
+
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+
+            }
+        )
 
 
         binding.tableRecyclerView.setHasFixedSize(true)
@@ -172,15 +211,15 @@ class TableFragment : Fragment() {
         val swipeToDismissTouchHelper = getSwipeToDismissTouchHelper(adapter)
         swipeToDismissTouchHelper.attachToRecyclerView(binding.tableRecyclerView)
 
-adapter.submitList(firebaseList)
+        adapter.submitList(tableList)
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
-        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
-            items.let {
-                adapter.submitList(it)
-            }
-        }
-            }
+      //  viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+      //      items.let {
+         //       adapter.submitList(it)
+        //    }
+   //     }
+    }
 
 
 
@@ -188,7 +227,7 @@ adapter.submitList(firebaseList)
 
 
     //カードのスワイプアクションの定義
-    private fun getSwipeToDismissTouchHelper(adapter: RecyclerView.Adapter<ItemListAdapter.ItemViewHolder>) =
+    private fun getSwipeToDismissTouchHelper(adapter: TableListAdapter) =
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT

@@ -12,7 +12,7 @@
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/activity_main_menu.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/cast_list_view.xml" value="0.38333333333333336" />
-        <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/category_list_view.xml" value="0.38333333333333336" />
+        <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/category_list_view.xml" value="0.25" />
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/category_text_item_list_view.xml" value="0.33" />
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/content_main_menu.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/fragment_cast.xml" value="0.25" />
@@ -29,6 +29,7 @@
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/fragment_shop_manager.xml" value="0.5" />
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/fragment_table.xml" value="0.33" />
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/fragment_table_detail.xml" value="0.21497584541062803" />
+        <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/fragment_table_list_view.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/Owner/Documents/GitHub/myreji/MyRejiApplication/app/src/main/res/layout/setting_select.xml" value="0.3875" />
       </map>
     </option>
