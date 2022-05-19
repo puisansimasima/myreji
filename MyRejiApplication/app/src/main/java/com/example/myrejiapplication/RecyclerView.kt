@@ -20,7 +20,7 @@ import com.example.myrejiapplication.databinding.CategoryTextItemListViewBinding
 // xmlで実装したレイアウトファイルからViewを生成し、先ほどのViewHolderに引数として渡します。
  //var itemViewLst:Int
 
-var album = mutableListOf<Item>()
+//var album = mutableListOf<Item>()
 
 class ItemListAdapter( val onItemClicked: (Item) -> Unit) :
     ListAdapter<Item, ItemListAdapter.ItemViewHolder>(DiffCallback) {
@@ -70,7 +70,7 @@ class ItemListAdapter( val onItemClicked: (Item) -> Unit) :
         holder.bind(current)
 
 
-        album.add(current)
+       // album.add(current)
     }
 
 

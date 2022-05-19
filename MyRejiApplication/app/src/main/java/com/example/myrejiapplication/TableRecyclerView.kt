@@ -68,6 +68,7 @@ var tableList = mutableListOf<TableName>()
 
 
 
+
         //コンストラクタで渡されるアイテム1件（1行）の各ビュー要素
 
         class TableViewHolder(private var binding: FragmentTableListViewBinding) :

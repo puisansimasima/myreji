@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.snapshotFlow
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,7 +19,11 @@ import com.example.myrejiapplication.data.TableName
 import com.example.myrejiapplication.databinding.FragmentTableBinding
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.NonCancellable.children
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,6 +36,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [TableFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
 
 
 
@@ -98,16 +104,12 @@ class TableFragment : Fragment() {
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
 
-
-        var firebaseList: MutableList<TableName> =  mutableListOf()
-
+                //firebaseのtableにリスナーを設置する
                 FirebaseDatabase.getInstance().getReference("table").addValueEventListener(
                     object : ValueEventListener {
 
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            // val artist by lazy{getArt()}  //lazyによって初期化
-                            // val fireList by lazy{getFirebaseList()}  //lazyによって初期化
-                            //  val firevalue = dataSnapshot.value
+
                             val items: HashMap<String ,String>? = dataSnapshot.getValue(object :
                                 GenericTypeIndicator<HashMap<String, String>>() {})
 
@@ -115,40 +117,22 @@ class TableFragment : Fragment() {
 
                             val keyList = items?.keys?.let { ArrayList(it) }?.sorted()
 
-
-
                             Log.d("TAG=hash", keyList.toString())
-                            val valueList = items?.values?.let { ArrayList(it) }
-
-                            val _fireList = items?.keys?.let { ArrayList(it) }!!
-
-                           // firebaseList= items.values.let { ArrayList(it) } .toMutableList()
-
-                            Log.d("TAGtolist", firebaseList.toString())
-
-                            //val myRef1 = database.getReference("list")
 
 
+                            for (child in dataSnapshot.children){
 
+                                Log.d("TAG-",(child.key.toString()))
+                              //  Log.d("TAG-",(child.children.toString() as String))
+                            }
+
+                            val _fireList = items?.values?.let { ArrayList(it).toList() }!!
+                                Log.d("TAG-li",_fireList.toString())
                             val database = Firebase.database
-                            // fun getFirebaseList(): ArrayList<String>{
-                            val myRef1 = database.getReference("list")
-                            myRef1.push().setValue(firebaseList)
-                            //  val songData = File("musicFiles/lib.csv")
-                            //   .readText()
-                            //   .split("\n")
-                            //   .shuffled()
-                            //   .first()
-                            //   return songData.split(",")[0]
-                            // }
-
-
-                            Log.d("TAGkeylist", keyList.toString())
 
                         }
 
                         override fun onCancelled(error: DatabaseError) {
-
 
                             //       TODO("Not yet implemented")
                         }
@@ -156,7 +140,9 @@ class TableFragment : Fragment() {
                     }
 
                 )
-                Log.d("TAGreta",firebaseList.toString())
+
+
+        //firebaseのlistにリスナー設置する
         FirebaseDatabase.getInstance().getReference("list").addValueEventListener(
             object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -167,10 +153,30 @@ class TableFragment : Fragment() {
                    //     GenericTypeIndicator<HashMap<String,String>>() {})
 
                  //   Log.d("TAG-hash2", items.toString())
+                   val AZ= FirebaseDatabase.getInstance().getReference("list")
+                    AZ.child("list").key
 
                     ; // will have value of String: "your-project-name"
-                    Log.d("TAG-hash2",snapshot.key .toString())
+                    Log.d("TAG-drophash2",snapshot.children.drop(0).toString())
+                    Log.d("TAG-tolisthash2",snapshot.children.toList() .toString())
+                    val aaa=snapshot.children.toList()
 
+                    Log.d("TAG-L",aaa[1].value .toString())
+
+                    val bbb= snapshotFlow { snapshot.children }
+                  //  val _fireList = bbb.let { ArrayList(it).toList() }!!
+                    for (child in snapshot.children){
+                        Log.d("TAG-",(child.key.toString()))
+
+                        Log.d("TAG-list",(listOf( child.value).toString()))
+
+                    }
+
+                    Log.d("TAG-hash2",AZ .toString())
+                    Log.d("TAG-hash2",snapshot.children.toString())
+                    Log.d("TAG-hash2",snapshot.childrenCount .toString())
+                    Log.d("TAG-hash2",snapshot.value.toString())
+                    Log.d("TAG-bb",bbb .toString())
 
                     val resultMap=HashMap<String, String>()
                     val tList=ArrayList<HashMap<String, String>>()
@@ -211,7 +217,7 @@ class TableFragment : Fragment() {
         val swipeToDismissTouchHelper = getSwipeToDismissTouchHelper(adapter)
         swipeToDismissTouchHelper.attachToRecyclerView(binding.tableRecyclerView)
 
-        adapter.submitList(tableList)
+        adapter.submitList(listOf("1","2"))
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
       //  viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
@@ -247,7 +253,7 @@ class TableFragment : Fragment() {
                 val position: Int = viewHolder.bindingAdapterPosition
 
                 Log.d("TAG-posi",position.toString())
-                Log.d("TAG-posialbum", album[position]. toString())
+             //   Log.d("TAG-posialbum", album[position]. toString())
                 // getItemId(position)
 
 
@@ -334,6 +340,7 @@ class TableFragment : Fragment() {
                 }
         }
  }
+
 
 
 
