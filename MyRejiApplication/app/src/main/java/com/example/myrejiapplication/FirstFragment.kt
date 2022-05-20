@@ -180,7 +180,12 @@ class FirstFragment : Fragment() {
             }
         })
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
+}
 
     /**
      * Binds views with the passed in item data.
@@ -228,12 +233,7 @@ class FirstFragment : Fragment() {
 
 
 
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
-        }
 
-    }
 
 
 

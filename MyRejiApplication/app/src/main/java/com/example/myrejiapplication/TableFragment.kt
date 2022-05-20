@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myrejiapplication.data.TableName
+import com.example.myrejiapplication.data.DataFireBase.TableName
+import com.example.myrejiapplication.data.DataFireBase
 import com.example.myrejiapplication.databinding.FragmentTableBinding
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -82,24 +83,24 @@ class TableFragment : Fragment() {
 
         //recyclerviewを押したら画面遷移
 
-        val adapter = TableListAdapter {
-            val action =
-                TableFragmentDirections.actionTableFragmentToTableDetailFragment()
-            this.findNavController().navigate(action)
-        }
+      //  val adapter = TableListAdapter {
+        //    val action =
+         //       TableFragmentDirections.actionTableFragmentToTableDetailFragment()
+        //    this.findNavController().navigate(action)
+      //  }
 
-        adapter.setOnViewClickListener(
+      //  adapter.setOnViewClickListener(
             // インターフェースの再利用は想定しておらず、その場限りでしか使わないためobject式として宣言
-            object : TableListAdapter.OnItemViewClickListener {
+     //       object : TableListAdapter.OnItemViewClickListener {
 
-                override fun onItemClick(tableName: TableName) {
-                    Log.d("TAG-clickitem", tableName .toString())
+     //           override fun onItemClick(tableName: FireBase.TableName) {
+          //          Log.d("TAG-clickitem", tableName .toString())
                     //処理
 
-                }
+        //        }
 
-            }
-        )
+      //      }
+    //    )
 
         // Attach an observer on the allItems list to update the UI automatically when the data
         // changes.
@@ -147,54 +148,57 @@ class TableFragment : Fragment() {
             object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
-                    Log.d("TAG-","kaeatta--")
+                    Log.d("TAG-", "kaeatta--")
 
-                 //   val items: HashMap<String ,String>? = snapshot.getValue(object :
-                   //     GenericTypeIndicator<HashMap<String,String>>() {})
+                    //   val items: HashMap<String ,String>? = snapshot.getValue(object :
+                    //     GenericTypeIndicator<HashMap<String,String>>() {})
 
-                 //   Log.d("TAG-hash2", items.toString())
-                   val AZ= FirebaseDatabase.getInstance().getReference("list")
+                    //   Log.d("TAG-hash2", items.toString())
+                    val AZ = FirebaseDatabase.getInstance().getReference("list")
                     AZ.child("list").key
 
                     ; // will have value of String: "your-project-name"
-                    Log.d("TAG-drophash2",snapshot.children.drop(0).toString())
-                    Log.d("TAG-tolisthash2",snapshot.children.toList() .toString())
-                    val aaa=snapshot.children.toList()
+                    Log.d("TAG-drophash2", snapshot.children.drop(0).toString())
+                    Log.d("TAG-tolisthash2", snapshot.children.toList().toString())
+                    val aaa = snapshot.children.toList()
 
-                    Log.d("TAG-L",aaa[1].value .toString())
+                    Log.d("TAG-L", aaa[1].value.toString())
 
-                    val bbb= snapshotFlow { snapshot.children }
-                  //  val _fireList = bbb.let { ArrayList(it).toList() }!!
-                    for (child in snapshot.children){
-                        Log.d("TAG-",(child.key.toString()))
+                    val bbb = snapshotFlow { snapshot.children }
+                    //  val _fireList = bbb.let { ArrayList(it).toList() }!!
+                    for (child in snapshot.children) {
+                        Log.d("TAG-", (child.key.toString()))
 
-                        Log.d("TAG-list",(listOf( child.value).toString()))
+                        Log.d("TAG-list", (listOf(child.value).toString()))
 
                     }
 
-                    Log.d("TAG-hash2",AZ .toString())
-                    Log.d("TAG-hash2",snapshot.children.toString())
-                    Log.d("TAG-hash2",snapshot.childrenCount .toString())
-                    Log.d("TAG-hash2",snapshot.value.toString())
-                    Log.d("TAG-bb",bbb .toString())
+                    Log.d("TAG-hash2", AZ.toString())
+                    Log.d("TAG-hash2", snapshot.children.toString())
+                    Log.d("TAG-hash2", snapshot.childrenCount.toString())
+                    Log.d("TAG-hash2", snapshot.value.toString())
+                    Log.d("TAG-bb", bbb.toString())
+
+                }
+            }
+
 
                     val resultMap=HashMap<String, String>()
                     val tList=ArrayList<HashMap<String, String>>()
 
 
 
-                 //   HashMap<String, String> resultMap = new HashMap<String, String>();
-                  //  　　　　List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+                    HashMap<String, String> resultMap = new HashMap<String, String>();
+                    　　　　List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
-                  //  for (i in snapshot : DataSnapshot) {
-                     //   snapshot.getKey() // will have value of String: "users", then "books"
-                    //    for (DataSnapshot deeperSnapshot : dataSnapshot) {
-                     //   snapshot.getKey();
-                        // if snapshot.getKey() is "users", this will have value of String: "randomUserId1", then "randomUserId2"
-                        // If snapshot.getKey() is "books", this will have value of String: "bookId1", then "bookId2"
-                  //  }
+                    for (i in snapshot : DataSnapshot) {
+                        snapshot.getKey() // will have value of String: "users", then "books"
+                        for (DataSnapshot deeperSnapshot : dataSnapshot) { /   snapshot.getKey();
+                         if snapshot.getKey() is "users", this will have value of String: "randomUserId1", then "randomUserId2"
+                         If snapshot.getKey() is "books", this will have value of String: "bookId1", then "bookId2"
+                    }
 
-               // }
+                }
 
 
                 }
@@ -204,7 +208,7 @@ class TableFragment : Fragment() {
                 }
 
 
-            }
+
         )
 
 
@@ -214,18 +218,21 @@ class TableFragment : Fragment() {
         binding.tableRecyclerView.adapter = adapter
 
 
+
+
+
         val swipeToDismissTouchHelper = getSwipeToDismissTouchHelper(adapter)
         swipeToDismissTouchHelper.attachToRecyclerView(binding.tableRecyclerView)
 
         adapter.submitList(listOf("1","2"))
-        // Attach an observer on the allItems list to update the UI automatically when the data
-        // changes.
-      //  viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
-      //      items.let {
-         //       adapter.submitList(it)
-        //    }
-   //     }
-    }
+         Attach an observer on the allItems list to update the UI automatically when the data
+         changes.
+        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                adapter.submitList(it)
+            }
+       }
+
 
 
 
@@ -233,7 +240,7 @@ class TableFragment : Fragment() {
 
 
     //カードのスワイプアクションの定義
-    private fun getSwipeToDismissTouchHelper(adapter: TableListAdapter) =
+   private fun getSwipeToDismissTouchHelper(adapter: TableListAdapter) =
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -264,9 +271,7 @@ class TableFragment : Fragment() {
                 adapter.notifyItemRemoved(viewHolder.bindingAdapterPosition)
             }
 
-            // private fun deleteItem(item: Item) {
 
-            //  }
 
 
 
@@ -310,16 +315,7 @@ class TableFragment : Fragment() {
                 background.draw(c)
             }
         })
-
-
-    fun makeList(list: ArrayList<String>) {
-
-        Log.d("TAGvallist", list.toString())
-
-    }
-
-
-
+}
     companion object {
             /**
              * Use this factory method to create a new instance of
@@ -339,8 +335,7 @@ class TableFragment : Fragment() {
                     }
                 }
         }
- }
+}
+ /*
 
-
-
-
+   */
