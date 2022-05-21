@@ -121,7 +121,7 @@ class FirstFragment : Fragment() {
                 val position: Int = viewHolder.bindingAdapterPosition
 
               Log.d("TAG-posi",position.toString())
-                Log.d("TAG-posialbum", album[position]. toString())
+              //  Log.d("TAG-posialbum", album[position]. toString())
                // getItemId(position)
 
 
