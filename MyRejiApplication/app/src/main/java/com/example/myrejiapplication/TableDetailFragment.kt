@@ -51,7 +51,7 @@ class TableDetailFragment : Fragment() {
 
 
 
-          AppFirebase().writeNewItem(binding.tableName.text.toString())
+          AppFirebase().writeNewItem()
 
 
 
