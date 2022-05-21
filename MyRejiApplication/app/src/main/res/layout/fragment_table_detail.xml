@@ -5,9 +5,7 @@
 
     <data>
 
-        <variable
-            name="tableName"
-            type="com.example.myrejiapplication.data.DataFireBase.TableName" />
+
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
