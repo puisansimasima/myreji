@@ -49,17 +49,7 @@ class TableDetailFragment : Fragment() {
 
         binding.addNewTable.setOnClickListener {
 
-
-
           AppFirebase().writeNewItem(binding.tableName.text.toString())
-
-
-
-
-
-
-
-
 
 
           //  val database = Firebase.database
