@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.util.stream.Collectors.toList
+
 
 class AppFirebase {
 
@@ -22,24 +22,55 @@ class AppFirebase {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
-                val post = dataSnapshot.value
-                    Log.d("TAG-po",post .toString())
 
-                val snap = mutableListOf(dataSnapshot.child("TableList"))
-                    Log.d("TAG-snap",snap.toString())
-               // snap.add(addTableName)
-                    Log.d("TAG-snapadd",snap.toString())
-                val items: HashMap<String ,Any>? = dataSnapshot.getValue(object :
+
+                
+
+
+                val items: HashMap<String ,Any>? = dataSnapshot.child("shop").getValue(object :
                     GenericTypeIndicator<HashMap<String,Any>>() {})
 
-                Log.d("TAG-items",items.toString())
-                Log.d("TAG-items",post.toString())
+             val   map= mapOf(dataSnapshot.key)
+              val  map1=map.filterKeys { key -> "Kotlin" in key }
+
+
+                if (items != null) {
+                    Log.d("TAG-pitems", items.values.toString())
+                }
+
+                if (items != null) {
+                    Log.d("TAG-pitems", items.keys.toString())
+                }
+
+                Log.d("TAG-pitems",items.isNullOrEmpty() .toString())
+
+
+                val post = dataSnapshot.value
+                    Log.d("TAG-p1",post .toString())
+Log.d("TAG-po",postReference.child("TableList").key .toString())
+                //Log.d("TAG-p",dataSnapshot.value .toString())
+
+
+                val snap = mutableListOf(dataSnapshot.child("shop").child("TableList").value)
+                    Log.d("TAG-snap",snap.toString())
+                //val snap1:Map<String,Any> = mapOf(dataSnapshot.child("shop").child("TableList").value.toString())
+                        Log.d("TAG-p2", dataSnapshot.child("shop").child("TableList").toString())
+                val a= dataSnapshot.child("List").value
+                Log.d("TAG-p3", listOf(a) .toString())
+                Log.d("TAG-p3", listOf(dataSnapshot.child("List") .value) .toString())
+
+               // snap.add(addTableName)
+                    //Log.d("TAG-snapadd",snap. toList().toString() )
+
+
+
 
              //   val resultMap=HashMap<String, String>()
               //  val tList=ArrayList<HashMap<String, String>>()
 
-                searchItem(snap)
+                //searchItem(snap)
             }
+
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
@@ -48,6 +79,45 @@ class AppFirebase {
         }
 
         postReference.addValueEventListener(postListener)
+
+
+
+        //子要素にアクセス
+
+        val refMap: DatabaseReference = Firebase.database.getReference("TableList")
+
+        refMap.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                // 子要素が追加された時に呼ばれる
+                // dataSnapshot : 追加された要素のKey-Value
+                // s:追加された要素の一つ前の要素のkey名
+                Log.d("seit", "ValueEventListener#onChildAdded")
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+                // 子要素に変化があった場合に呼ばれる
+                // dataSnapshot : 変化のあった子要素のKey-Value
+                // s:変化のあった子要素の一つ前の子要素のKey名
+                Log.d("seit", "ValueEventListener#onChildChanged")
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                // 子要素が削除された
+                Log.d("seit", "ValueEventListener#onChildRemoved")
+            }
+
+            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
+                // 子要素の順番が変化した
+                Log.d("seit", "ValueEventListener#onChildMoved")
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // サーバーエラーかもしくはセキュリティとデータべースルールによってデータにアクセスできない
+                Log.d("seit", "ValueEventListener#onCancelled")
+            }
+        })
+
+
             Log.d("TAG-mm",postReference.child("TableList").key .toString())
 
            val Test = postReference.child("TableList").key
@@ -176,12 +246,15 @@ class AppFirebase {
 
                 }
 
-fun searchItem(snapshot: MutableList<DataSnapshot>) {
+
+
+
+fun searchItem(snapshot: MutableList<Any?>) {
 
 
 
     Log.d("TAG-serch",snapshot.toString())
-    Log.d("TAG-serch",snapshot.get(0) .toString())
+   // Log.d("TAG-serch",snapshot.toString())
    // for (i in post:Any?){
 
      //   if post.getKey() is "users", this will have value of String: "randomUserId1", then "randomUserId2"
