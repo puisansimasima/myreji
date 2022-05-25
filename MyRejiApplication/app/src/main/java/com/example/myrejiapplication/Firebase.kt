@@ -8,7 +8,7 @@ import com.google.firebase.ktx.Firebase
 
 class AppFirebase {
 
-    //lateinit var snap:MutableList<Any>
+    //var aaa:MutableList<String> = TODO()
 
     //firebaseに書き込み
      fun writeNewItem(addTableName: String) {
@@ -24,14 +24,30 @@ class AppFirebase {
                 // Get Post object and use the values to update the UI
 
 
-                
+                Log.d("TAG-hash2",dataSnapshot.children.toList() .toString())
+                Log.d("TAG-hash2",dataSnapshot.value.toString())
+                Log.d("TAG-hash2",dataSnapshot.key .toString())
+                Log.d("TAG-hash2",dataSnapshot.child("TableList"). key .toString())
+                Log.d("TAG-hash2",dataSnapshot.child("TableList") .value .toString())
 
+                val zaq=dataSnapshot.child("TableList").value.toString()
+
+                   var tableList= mutableListOf(zaq)
+
+
+
+                Log.d("TAG-t",zaq.toString())
+                Log.d("TAG-t",tableList.toString())
+
+tableList.add(0,addTableName)
+                Log.d("TAG-t",tableList.toString())
 
                 val items: HashMap<String ,Any>? = dataSnapshot.child("shop").getValue(object :
                     GenericTypeIndicator<HashMap<String,Any>>() {})
 
-             val   map= mapOf(dataSnapshot.key)
-              val  map1=map.filterKeys { key -> "Kotlin" in key }
+            // val   map= mapOf(dataSnapshot.key)
+         //     val  map1=map.filterKeys { key -> "Kotlin" in key }
+
 
 
                 if (items != null) {
@@ -81,17 +97,43 @@ Log.d("TAG-po",postReference.child("TableList").key .toString())
         postReference.addValueEventListener(postListener)
 
 
+    //    fireDatabase.child("shop"). child("TableList").push().setValue(tableList)
 
         //子要素にアクセス
 
-        val refMap: DatabaseReference = Firebase.database.getReference("TableList")
+        val refMap: DatabaseReference = Firebase.database.getReference("shop")
 
-        refMap.addChildEventListener(object : ChildEventListener {
+        refMap.child("TableName") .addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
                 // 子要素が追加された時に呼ばれる
                 // dataSnapshot : 追加された要素のKey-Value
                 // s:追加された要素の一つ前の要素のkey名
-                Log.d("seit", "ValueEventListener#onChildAdded")
+                Log.d("TAG-seit", "ValueEventListener#onChildAdded")
+                Log.d("TAG-s0",dataSnapshot.toString())
+                Log.d("TAG-s1",dataSnapshot.key.toString())
+                Log.d("TAG-s2",dataSnapshot.value.toString())
+                Log.d("TAG-s3", (dataSnapshot.key.toString() to dataSnapshot.value.toString()).toString())
+                Log.d("TAG-s4",s .toString())
+                Log.d("TAG-s5",dataSnapshot.child("TableList") .toString())
+                Log.d("TAG-s5",dataSnapshot.child("TableList").value .toString())
+
+
+                val a=dataSnapshot.key.toString() to dataSnapshot.value.toString()
+
+
+
+
+                val items: HashMap<Int ,String>? = dataSnapshot.child("shop").child("TableList") .getValue(object :
+                    GenericTypeIndicator<HashMap<Int,String>>() {})
+
+                if (items != null) {
+                    Log.d("TAG-s6", items.keys.toString())
+                }
+                if (items != null) {
+                    Log.d("TAG-s6", items.values.toString())
+                }
+
+                Log.d("TAG-s6", items?.values.toString())
             }
 
             override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
