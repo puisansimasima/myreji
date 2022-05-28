@@ -19,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [TableDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-lateinit var fireDatabase: DatabaseReference
+//lateinit var fireDatabase: DatabaseReference
 
 class TableDetailFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -48,9 +48,8 @@ class TableDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addNewTable.setOnClickListener {
-
-          AppFirebase().writeNewItem(binding.tableName.text.toString())
-
+          AppFirebase()
+           // Log.d("TAG-z",AppFirebase().test() .toString())
 
           //  val database = Firebase.database
           //  val myRef = database.getReference("table")
